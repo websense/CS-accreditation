@@ -1,0 +1,16 @@
+{
+    "inputDocsDir": "InputDocs/",
+    "knowledgeInputFile" : "CSSE-allprograms-outcome-mappings-20241111.xlsx",
+    "staffCVsFile": "ACS-School-Staff-Table.xlsx",
+    "caidiInputDocsDir": "InputDocs/caidiReports/",
+    "unitoutcomesFile" : "CITS-units-outcomes-assessments.xlsx",
+    "majorsoutcomesFile": "Undergrad-majors-outcomes.xlsx",
+    "MIToutcomesFile" : "MIT-outcomes.xlsx",
+    "excelProgramsOutput": "/OutputDocs/excelDocs/Programs/",
+    "excelUnitsOutput": "/OutputDocs/excelDocs/Units/",
+    "latexProgramTemplate": "/InputDocs/latexInputs/Program-Template.tex",
+    "latexOutput": "/OutputDocs/latexDocs/",
+    "latexTablesOutput": "/OutputDocs/latexDocs/Tables/",
+    "htmlProgramTemplate": "/InputDocs/htmlInputs/Program-Template.html",
+    "htmlOutput": "/OutputDocs/htmlDocs/"
+}
