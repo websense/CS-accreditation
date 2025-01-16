@@ -2,12 +2,13 @@
 # Directory structure for accreditation mapper project
 # This file should be sourced by each project script
 
-PROJECT_DIR="/Users/00047104/Dropbox/CSSE-accreditations/Accreditation-Documenter-Project-2024/accreditation_mapper_master_october2024"
+PROJECT_DIR="./"
+#"/Users/00047104/Dropbox/CSSE-accreditations/Accreditation-Documenter-Project-2024/accreditation_mapper_master_october2024"
 
 
 ## Project Input Documents
 INPUT_DIR=$PROJECT_DIR/InputDocs
-KNOWLEDGEBASE_FILE="CSSE-allprograms-outcome-mappings-20241111.xlsx"
+KNOWLEDGEBASE_FILE="CSSE-allprograms-outcome-mappings-20241209.xlsx"
 UNITOUTCOMES_FILE="CITS-units-outcomes-assessments.xlsx". #and PHIL units but STAT still TODO
 MAJORS_OUTCOMES_FILE="Undergrad-majors-outcomes.xlsx"
 MIT_OUTCOMES_FILE="MIT-outcomes.xlsx"
@@ -44,7 +45,7 @@ cd $PROJECT_DIR
 ## note needed    "latexMappingTemplate": "/InputDocs/latexInputs/Outcomes-Map-Template.tex",
 echo '{
     "inputDocsDir": "InputDocs/",
-    "knowledgeInputFile" : "CSSE-allprograms-outcome-mappings-20241111.xlsx",
+    "knowledgeInputFile" : "CSSE-allprograms-outcome-mappings-20241209.xlsx",
     "staffCVsFile": "ACS-School-Staff-Table.xlsx",
     "caidiInputDocsDir": "InputDocs/caidiReports/",
     "unitoutcomesFile" : "CITS-units-outcomes-assessments.xlsx",
