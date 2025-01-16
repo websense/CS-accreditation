@@ -2,7 +2,7 @@
 # Directory structure for accreditation mapper project
 # This file should be sourced by each project script
 
-PROJECT_DIR="./"
+PROJECT_DIR="."
 #"/Users/00047104/Dropbox/CSSE-accreditations/Accreditation-Documenter-Project-2024/accreditation_mapper_master_october2024"
 
 
