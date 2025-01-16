@@ -39,11 +39,6 @@ jobs:
     #- name: Test with pytest - no tests to run
     #  run: |
     #    pytest
-    jobs:
-      runscript:
-        name: Example Script
-        runs-on: ubuntu-latest
-        steps:
-        - name: Call a Bash Script
-          run:  bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
-          # run:  bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh my-folder-name
+    - name: Call a Bash Script
+      run:  bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
+    # run:  bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh my-folder-name
