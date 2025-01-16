@@ -39,5 +39,6 @@ jobs:
     #  run: |
     #    pytest
     - name: Call a Bash Script
-      run:  bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
-    # run:  bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh
+      run:  | 
+        bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
+        bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh
