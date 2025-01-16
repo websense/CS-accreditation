@@ -6,8 +6,8 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #pull_request:
+  #  branches: [ "main" ]
 
 permissions:
   contents: read
@@ -40,4 +40,4 @@ jobs:
     #    pytest
     - name: Call a Bash Script
       run:  bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
-    # run:  bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh my-folder-name
+    # run:  bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh
