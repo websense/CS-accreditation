@@ -4,11 +4,9 @@
 name: Python Accreditation Generator Application
 
 on:
-  #sleep for now
-  #push:
-  #  branches: [ "main" ]
-  #pull_request:
-  #  branches: [ "main" ]
+  pull_request:
+    types: [review_requested]
+    branches: [ "main" ]
 
 permissions:
   contents: read
