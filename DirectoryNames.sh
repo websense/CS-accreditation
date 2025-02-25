@@ -8,12 +8,12 @@ PROJECT_DIR="."
 
 ## Project Input Documents
 INPUT_DIR=$PROJECT_DIR/InputDocs
-KNOWLEDGEBASE_FILE="CSSE-allprograms-outcome-mappings-20241209.xlsx"
+KNOWLEDGEBASE_FILE="CSSE-allprograms-outcome-mappings-2025-02.xlsx"
 UNITOUTCOMES_FILE="CITS-units-outcomes-assessments.xlsx". #and PHIL units but STAT still TODO
 MAJORS_OUTCOMES_FILE="Undergrad-majors-outcomes.xlsx"
 MIT_OUTCOMES_FILE="MIT-outcomes.xlsx"
 
-
+## TODO copy Part*.tex files and CSSE-ACS-Accreditation-Submission-Master.tex from overleaf source into InputDocs/latexInputs/
 
 CAIDI_INPUTS=$INPUT_DIR/caidiReports
 LATEX_INPUTS=$INPUT_DIR/latexInputs
@@ -31,6 +31,8 @@ HTML_OUTPUT=$OUTPUT_DIR/htmlDocs
 LATEX_OUTPUT=$OUTPUT_DIR/latexDocs
 LATEX_TABLES_OUTPUT=$OUTPUT_DIR/latexDocs/Tables
 
+
+
 ## Project Scripts: shell scripts and Python scripts for processing data
 
 KNOWLEDGEBASE_DIR=$PROJECT_DIR/KnowledgeBaseGenerator
@@ -45,7 +47,7 @@ cd $PROJECT_DIR
 ## note needed    "latexMappingTemplate": "/InputDocs/latexInputs/Outcomes-Map-Template.tex",
 echo '{
     "inputDocsDir": "InputDocs/",
-    "knowledgeInputFile" : "CSSE-allprograms-outcome-mappings-20241209.xlsx",
+    "knowledgeInputFile" : "CSSE-allprograms-outcome-mappings-2025-02.xlsx",
     "staffCVsFile": "ACS-School-Staff-Table.xlsx",
     "caidiInputDocsDir": "InputDocs/caidiReports/",
     "unitoutcomesFile" : "CITS-units-outcomes-assessments.xlsx",
