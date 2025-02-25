@@ -25,6 +25,9 @@ except json.JSONDecodeError:
 # Open input excel files and read relevant parts into pandas data frames
 knowledgefile = os.path.join(config["inputDocsDir"], config["knowledgeInputFile"]) 
 dfCourses = pd.read_excel(knowledgefile , header=0, sheet_name='CriterionA')
+
+dfJustification = pd.read_excel(knowledgefile , header=0, sheet_name='Program Justification')
+
 dfUnits = pd.read_excel(knowledgefile , header=0, sheet_name='Outcomes Mappings')
 dfProgs = pd.read_excel(knowledgefile , header=0, sheet_name='Programs Details')
 dfProgOutcomes = pd.read_excel(knowledgefile , header=0, sheet_name='Program Outcome Mappings')
@@ -49,6 +52,15 @@ for course in courseSet:
 	dicA[course] = cA
 acsDict["A"] = dicA
 
+#==== criterion A Program justification text
+dicJ = {}
+for course in courseSet:
+	cJ =  dfJustification.loc[dfCourses['Course']==course,("Description or URL")]
+	dicJ[course] = cJ
+acsDict["J"] = dicJ
+
+
+
 #=== criterion B
 # use Criterion B make a dictionary: course ID to dataframe table of information needed
 cB1 = dfUnits.loc[ dfUnits['Outcome Group']=='ICT Professional Role', ( 'Outcome', 'Course') ]
@@ -56,7 +68,6 @@ cB2 = dfUnits.loc[ dfUnits['Outcome Group']=="ICT Skills SFIA",( 'Outcome','Just
 cB2.rename(columns = {'Outcome':'SFIA Skill Code'}, inplace = True) #match ACS naming
 cB2.rename(columns = {'Level (SFIA/Bloom/UnitOutcome)':'SFIA level'}, inplace = True)
 cB2.rename(columns = {'Justification':'SFIA-9 URL'}, inplace = True)
-
 
 dicB = {}
 for course in courseSet:
