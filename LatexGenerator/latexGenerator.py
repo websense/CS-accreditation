@@ -2,7 +2,7 @@
 # This script populates a set of Latex templates for an ACS submission
 # @ Author Rachel Cardell-Oliver 
 # @ Author Original script by MIT team 12 accreditation mapper project
-# @Version 29 Oct 2024
+# @Version 4 Feb 2025
 
 import pandas as pd
 import os
@@ -34,11 +34,11 @@ stafftable['Name'] = "\\href{" + staffcvs['Research repository URL']  + "}{"+ st
 
 outfile = latexoutputs+"StaffCVs.tex"
 fout = open(outfile, "w") 
-fout.write(stafftable.to_latex(index=False, column_format="p{3.5cm} p{.5cm} p{.5cm}  p{.6cm} p{.5cm} p{7cm}"+"\n\n").replace("00000","") )
+fout.write(stafftable.to_latex(index=False, column_format="p{3.4cm} p{.5cm} p{.5cm}  p{.5cm} p{.5cm} p{6.35cm}"+"\n\n").replace("00000","") )
 fout.close()
 	
 	
-# generate per-program latex templates (but use caidi outcomes map not this)
+# generate per-program latex templates of outcomes (but eventually link to caidi outcomes map not this)
 for course in kb.courseSet:
 	print(course)
 	#get program template text for modification
@@ -75,14 +75,23 @@ for course in kb.courseSet:
 	fname = latexoutputs + "criterionA-"+course+".tex"
 	fA = open(fname, "w") 
 	ta = kb.acsDict["A"][course].copy()
-	for row in ['Handbook', 'Curriculum', 'Study Plan']:
+	# insert hyperlinks
+	for row in ['Handbook']:   #no longer 'Study Plan' - link broken
 		u1 = ta.loc[ta['Program Details']==row, 'Description or URL'].values[0] #get string
 		u11 = "\\href{"+u1+"}{"+row+" Details}"
 		ta.replace(u1, u11, inplace=True)
 	mytable = ta.to_latex(index=False)
-	#mytable = formattable( mytable )  WIP revisit this
 	fA.write( mytable )
 	fA.close()
+	
+# write program justification text to Justification-THISPROG.tex
+for course in kb.courseSet:
+	fname = latexoutputs + "Justification-"+course+".tex"
+	fA = open(fname, "w") 
+	ta = kb.acsDict["J"][course].values[0] #get string
+	fA.write( ta )
+	fA.close()
+
 
 # tables for criterionB
 for course in kb.courseSet:
