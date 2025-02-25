@@ -21,8 +21,12 @@ export PYTHONPATH="${PYTHONPATH}:$PROJECT_DIR:$KNOWLEDGEBASE_DIR"
 
 # Check and clean output dirs, -f suppresses warnings
 echo "Check output directories are ready and clean out old files ..."
-rm -f $EXCEL_OUTPUT/Programs/*
-rm -f $EXCEL_OUTPUT/Units/*
+rm -f $EXCEL_OUTPUT/Programs/*.xlsx
+rm -f $EXCEL_OUTPUT/Units/*.xlsx
+
+mkdir $EXCEL_PROGRAMS_OUTPUT
+mkdir $EXCEL_UNITS_OUTPUT
+
 
 python3  $EXCEL_DIR/excelGenerator.py
 
