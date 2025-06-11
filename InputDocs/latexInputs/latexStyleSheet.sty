@@ -1,0 +1,124 @@
+
+%==============
+% Rubric command  EDIT HERE TO TURN  RUBRICS ON OR OFF
+%uncomment first line only to include rubric instructions for each section.
+%uncomment second line only to hide rubrics
+\newcommand{\rubric}[1]{{\footnotesize\it\color{red}#1\newline\newline}} %DO show rubrics
+%\newcommand{\rubric}[1]{}  %don't show rubrica
+
+
+
+%==============
+%for fixed width by left aligned cols
+\newcolumntype{P}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%==============
+%chapter and heading style
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+\fancyhead[R]{\ \thechapter\ --\ \leftmark} %\chaptername
+\fancyhead[L]{}
+\renewcommand{\chaptername}{Section} %use "Section" instead of "Chapter" for each program and intro parts
+
+%==============
+%% COLOURS INFO 
+\RequirePackage{xcolor}
+%\definecolor{colorDarkBlue}{RGB}{174,192,216}
+
+% Part 1 and 2 tables colour
+\definecolor{colorLightBlue}{RGB}{219,229,241}
+%\definecolor{colorGrey}{RGB}{196,195,194}
+%\definecolor{header3}{RGB}{211,211,211}
+%\definecolor{lightRed}{RGB}{255,204,204}
+%\definecolor{lightOrange}{RGB}{255,229,204}
+%\definecolor{veryDarkBlue}{RGB}{0,51,102}
+%\definecolor{lightGray}{RGB}{230,230,230}
+%\definecolor{lightGreen}{RGB}{144,238,144}
+%\definecolor{darkOrange}{RGB}{255,140,0}
+
+% Criterion C table colours
+\definecolor{paleOrange}{RGB}{255,229,204}
+\definecolor{paleGreen}{RGB}{204,255,204}
+\definecolor{paleBlue}{RGB}{204,255,255}
+%see https://www.rapidtables.com/web/color/RGB_Color.html for more colours
+
+
+%% Cell colors
+%\newcommand{\colorcelldarkblue}{\cellcolor{colorDarkBlue}\color{black}}
+%\newcommand{\colorcelllightblue}{\cellcolor{colorLightBlue}\color{black}}
+%\newcommand{\colorcellverydarkblue}{\cellcolor{veryDarkBlue}\color{white}}
+%
+%% Header colors
+%% Light blue cells with italics and bold fonts
+%\newcommand{\colorcelllightblueitalic}{\cellcolor{colorLightBlue}\color{black}\itshape}
+%\newcommand{\colorcelllightbluebold}{\cellcolor{colorLightBlue}\color{black}\bfseries}
+%\newcommand{\fullcolorcelllightbluebold}[1]{\cellcolor{colorLightBlue}\color{black}\textbf{#1}}
+%
+%% Dark blue cells with italics and bold fonts
+%\newcommand{\colorcelldarkbluebold}{\cellcolor{colorDarkBlue}\color{black}\bfseries}
+%
+%% Grey cell with italic
+%\newcommand{\colorcellgreyitalic}{\cellcolor{colorGrey}\color{black}\itshape}
+
+%% New commands for Criterion A table headers
+%\newcommand{\criterionAHeader}[1]{\cellcolor{colorDarkBlue}\multirow{-2}{*}{\textbf{#1}}}
+%\newcommand{\criterionAKey}{\textit{Key: \redtext{*}advanced units (Criterion D) and \redtext{\^{}}integrated and applied units (Criterion E)}}
+%\newcommand{\criterionAUnitSequence}{\cellcolor{colorDarkBlue}\multirow{-2}{*}{\textbf{Unit Sequence}}}
+%
+%% New generic commands for consistent formatting
+%\newcommand{\coursetitle}[1]{\noindent\textbf{#1}\\[0.5em]}
+%\newcommand{\criterionTable}{\noindent\begin{tabular}{|p{0.20\textwidth}|p{0.77\textwidth}|}}
+%\newcommand{\wrappedcell}[2]{\parbox[t]{#1\textwidth}{#2}}
+%
+%% Criterion A
+%\newcommand{\criterionAEmptyCol}{0.05\textwidth}
+%\newcommand{\criterionACodeCol}{0.22\textwidth}
+%\newcommand{\criterionATitleCol}{0.40\textwidth}
+%\newcommand{\criterionACoordinatorCol}{0.20\textwidth}
+%\newcommand{\criterionAFileCol}{0.05\textwidth}
+%\newcommand{\criterionAOutcomes}[1]{\parbox[t]{1\textwidth}{#1}}
+%
+%\newcommand{\criterionATable}{%
+%  \begin{tabular}{|p{\criterionAEmptyCol}|p{\criterionACodeCol}|p{\criterionATitleCol}|p{\criterionACoordinatorCol}|p{\criterionAFileCol}|}%
+%}
+
+%% Criterion B
+%\newcommand{\criterionBHeaderCell}[1]{\textit{#1}}
+%\newcommand{\criterionBHeaderCellColored}[1]{\cellcolor{colorDarkBlue}\criterionBHeaderCell{#1}}
+%\newcommand{\criterionBEmptyColoredRow}{\cellcolor{colorDarkBlue}&\cellcolor{colorDarkBlue}&\cellcolor{colorDarkBlue}&\cellcolor{colorDarkBlue}&\cellcolor{colorDarkBlue}&\cellcolor{colorDarkBlue}\\}
+%
+%% Criterion C
+%\newcommand{\myrotcell}[1]{\rotcell{\makebox[0pt][l]{#1}}}
+%\newcommand{\criterionCEssentialHeader}[1]{\cellcolor{lightOrange}\color{black}\multirow{-2}{*}{\textbf{#1}}}
+%\newcommand{\criterionCGeneralHeader}[1]{\cellcolor{lightGreen}\color{black}\multirow{-2}{*}{\textbf{#1}}}
+%\newcommand{\professionalKnowledgeCell}{\cellcolor{colorLightBlue}\color{black}}
+%\newcommand{\technologyBuildingCell}{\cellcolor{colorLightBlue}\color{black}}
+%\newcommand{\lightBlueCell}[1]{\cellcolor{colorLightBlue}\color{black}#1}
+%\newcommand{\lightGrayCell}[1]{\cellcolor{colorLightBlue}\color{black}\multirow{-2}{*}{\textbf{#1}}}
+%
+%% Criterion C colors
+%\newcommand{\ictEthicsCell}{\cellcolor{darkOrange}} 
+%\newcommand{\impactsOfICTCell}{\cellcolor{lightOrange}}
+%\newcommand{\workingIndividuallyTeamworkCell}{\cellcolor{lightOrange}}
+%\newcommand{\professionalCommunicationCell}{\cellcolor{lightOrange}}
+%\newcommand{\theProfessionalPractitionerCell}{\cellcolor{lightOrange}}
+%\newcommand{\cyberSecurityCell}{\cellcolor{lightGray}}
+%\newcommand{\ictProjectManagementCell}{\cellcolor{lightGray}}
+%
+%
+%% Criterion D
+%\newcommand{\criterionDcoursetitle}[1]{\noindent\textbf{#1}}
+%\newcommand{\criterionDtable}{%
+%  \begin{longtable}{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.45\textwidth}|}%
+%}
+%
+%% Column commands
+%\newcommand{\unitcolumn}[1]{\parbox[t]{0.2\textwidth}{#1}}
+%\newcommand{\assessmentcolumn}[1]{\parbox[t]{0.3\textwidth}{#1}}
+%\newcommand{\complexcomputingcolumn}[1]{\parbox[t]{0.45\textwidth}{#1}}
+%
+%% Criterion E 
+%\newcommand{\unitcodecolumn}[1]{\wrappedcell{0.20}{#1}}
+%\newcommand{\justificationcolumn}[1]{\wrappedcell{0.77}{#1}}
+

@@ -1,0 +1,126 @@
+\documentclass[10pt,a4paper]{report}
+%\usepackage[T1]{fontenc} %in style sheet
+%\usepackage[utf8]{inputenc}
+%\usepackage{lmodern} %font family
+\usepackage{textcomp}
+\usepackage{lastpage}
+\usepackage{geometry}
+\geometry{a4paper}
+%\geometry{tmargin=0.5in,lmargin=0.5in,bmargin=0.5in,rmargin=0.5in} %too crowded
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{rotating}
+\usepackage{adjustbox}
+\usepackage{latexStyleSheet}
+\usepackage{array} %for justified wl cols
+\usepackage{longtable} %for multipage tables
+\usepackage{booktabs}
+\usepackage{lscape} %for landscape pages
+\usepackage[table]{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{comment} %for multiline comment environment \begin{comment} \end{comment}
+
+%chapter and heading style
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+\fancyhead[R]{\ \thechapter\ --\ \leftmark} %\chaptername
+\fancyhead[L]{}
+\renewcommand{\chaptername}{Section} %use "Section" instead of "Chapter" for each program and intro parts
+
+%TODO move most of this to style doc?
+%for fixed width by left aligned cols
+\newcolumntype{P}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={PDF file},
+    pdfpagemode=FullScreen,
+    }
+
+\urlstyle{same}
+
+%Provides shortnames with links to OneDrive site for accreditation
+%Use these shortnames rather than scattering URL links throughout the document
+
+
+
+\title{ACS Accreditation}
+\author{XXX}
+%\date{\today} 
+
+
+\begin{document}%
+
+% -------------------------------------------------------------
+% COVER PAGE
+% -------------------------------------------------------------
+\begin{titlepage}                                             % Create cover page
+\pagestyle{empty}                                             % No headers or footers on cover
+\centering                                                    % Centre all contents on cover page
+%\includegraphics[width=0.4\textwidth]{uwa-logo.jpg} \\ % university logo
+\vspace{60mm}                                                 % Vertical space
+\hrule\vspace{5mm}                                            % Horizontal rule above title
+{\LARGE \textbf{{ACS Accreditation Submission}}} \\           % The title of the thesis
+\vspace{5mm}\hrule\vspace{20mm}                               % Horizontal rule below title
+{\large Department of XXX} \\ \vspace{2mm}                           % The author
+\vfill                                                        % Fill space down to bottom of page
+ % University and date at bottom
+{\small University of XXX\\ \today}
+%todo freeze to submission date (eg May 2024) when ready
+%\\ May 2025}               
+\cleardoublepage                                              % Go to next odd page
+\end{titlepage}
+
+
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+%Preface with details of main external links for accreditation including shar point page etc.
+\input{ExternalDocsLinks.tex}
+
+\part{Accreditation Request and Institutional Context}       
+
+\input{Part1-AccreditationRequest.tex}
+
+%\part{Institutional Context of ICT Programs}
+\input{Part2-InstitutionalContext.tex}
+
+\part{ICT Program-Specifications and Implementations}\label{Part2ProgramSpecifications}
+
+\rubric{This section of the template identifies the information that specifies each program. In this section of
+the template briefly demonstrate how the Program-has been structured to develop the Professional
+Knowledge, Skills and Application of Knowledge and Skills required to achieve the program's ICT
+professional objectives. This should normally be available as a link to internal institution documents
+when the Program-was approved.
+
+Prepare one response for each program.
+Where there are multiple majors within a Program-which target different professional roles,
+prepare one specification for each major. If the Program-is also offered without a major, prepare a specification for that also.
+
+See also listed occupations (migration) for Criterion B
+\url{https://www.acs.org.au/msa/information-for-applicants/occupations-anzsco-codes.html}
+}
+
+%==== Computer Science Major MJD{-}CMPSC
+\chapter{Computer Science} % MJD{-}CMPSC}
+\input{Tables/MJD-CMPSC-Program.tex}
+
+%==== add other programs here
+
+
+\chapter{ICT Program Implementation Pathways}\label{Pathways}
+
+\input{Part3-ImplementationPathways.tex}
+
+
+\end{document}
+
+
+

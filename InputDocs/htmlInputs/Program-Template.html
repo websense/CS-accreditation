@@ -1,0 +1,120 @@
+<!-- Prepared by Rachel Cardell-Oliver Nov 2024  -->
+<!-- Code sources: w3schools.com/w3css -->
+
+<!DOCTYPE html>
+<html>
+<!-- START COMMON HEADER -->
+<title>UWA Computer Science and Software Engineering ACS Accreditation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<body>
+
+<!-- END COMMON HEADER -->
+
+<div class="w3-container w3-blue">
+<h2>THISPROG</h2>
+</div>
+
+<div class="w3-main" style="margin-left">
+
+<!-- Criteria.  Replace each criterionX-Table-HERE with table for the program -->
+
+<div class="w3-panel">
+<button onclick="myShow('criterionA')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion A. Program Design
+</button>
+<div id="criterionA" class="w3-hide">
+criterionA-Table-HERE
+</div>
+</div>
+
+<div class="w3-panel">
+<button onclick="myShow('criterionB')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion B. Professional ICT Role and Skills (and Mapping)</button>
+<div id="criterionB" class="w3-hide">
+criterionB-Table-HERE
+</div>
+</div>
+
+<div class="w3-panel">
+<button onclick="myShow('criterionC')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion C. Coverage of ICT Knowledge</button>
+<div id="criterionC" class="w3-hide">
+<p></p>
+criterionC-Table-HERE
+</div>
+
+<!-- <div class="w3-panel"> -->
+<p></p>
+<button onclick="myShow('criterionCjustifications')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion C. Coverage of ICT Knowledge Mapping Justifications</button>
+<div id="criterionCjustifications" class="w3-hide">
+criterionC-Justifications-Table-HERE
+</div>
+<!-- </div> -->
+</div>
+
+
+
+<div class="w3-panel">
+<button onclick="myShow('criterionD')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion D. Advanced ICT Knowledge Addressing Complex Computing</button>
+<div id="criterionD" class="w3-hide">
+criterionD-Table-HERE
+</div>
+</div>
+
+<div class="w3-panel">
+<button onclick="myShow('criterionE')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion E. Integrated and Applied ICT Knowledge and Skills</button>
+<div id="criterionE" class="w3-hide">
+criterionE-Table-HERE
+</div>
+</div>
+
+<div class="w3-panel">
+<button onclick="myShow('criterionF')" class="w3-button w3-block w3-left-align w3-blue">
+Criterion F. Preparation for Professional ICT Practice</button>
+<div id="criterionF" class="w3-hide">
+criterionF-Table-HERE
+</div>
+</div>
+
+<!--  Don't include this for now - not in ACS criteria
+<div class="w3-panel">
+<button onclick="myShow('criterionOutMap')" class="w3-button w3-block w3-left-align w3-blue">
+Unit Outcomes to Program Outcomes Mapping</button>
+<div id="criterionOutMap" class="w3-hide">
+OutMap-Table-HERE
+</div>
+</div>
+-->
+
+
+
+
+
+
+<script>
+function myShow(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+<!-- START COMMON FOOTER -->
+<div class="w3-blue w3-panel">
+<h5>  <img src="https://www.uwa.edu.au/assets/legacy/images/logo-full-hor-rev.png" alt="UWA" style="width:10%" >
+&nbsp;&nbsp;Department of Computer Science and Software Engineering</h5>
+</div>
+<!-- END COMMON FOOTER -->
+
+</body>
+</html>
+
+
