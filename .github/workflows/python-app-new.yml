@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  #manual trigger
 #on:
 #  pull_request:
-    types: [review_requested]
+#    types: [review_requested]
     branches: [ "main" ]
 
 permissions:
