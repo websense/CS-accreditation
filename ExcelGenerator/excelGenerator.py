@@ -24,12 +24,12 @@ except json.JSONDecodeError:
 
 ## TODO set df index in knowledgebase eg df.set_index('Unit Code') (so no extra index shown)
 
-# 1. generate per-program latex templates
+# 1. generate per-program excel templates
 for course in kb.courseSet:
 	cf = os.getcwd()+config["excelProgramsOutput"]+course+".xlsx"
 	with pd.ExcelWriter(cf) as writer: 
-            	# Convert dictionary to DataFrame for each criteria and write to a sheet, except staff CVs
-		for ci in list(kb.acsDict.keys())[:-1]: 
+            	# Convert dictionary to DataFrame for each criteria and write to a sheet, except staff CVs and unit maps
+		for ci in list(kb.acsDict.keys())[:-4]: 
 			da = kb.acsDict[ci][course]
 			if type(da) is pd.core.frame.DataFrame: #then write directly
 				da.to_excel(writer, sheet_name='Criterion'+ci) 
@@ -42,24 +42,35 @@ for course in kb.courseSet:
 						dbs = pd.DataFrame({ cj : [ db ] })
 						dbs.to_excel(writer, sheet_name='Criterion'+ci+cj) 
 					else:
-						print("Error:" + ci + "neither dataframe nor dict of dataframes")
-						
+						print("Error: " + ci + " is neither dataframe nor dict of dataframes")
 
 
-# 2. generate per-unit list of requirements
-du = kb.dfUnits
+# 2. generate per-unit list of requirements, all are data frames
+## TODO NOT FOR NOW
+'''
+do = kb.acsDict['UnitOutcomes']
+du = kb.dfUnits.sort_values(by='Unit Code')
+#dm = kb.acsDict['UnitProgMappings']
 allunits = du['Unit Code'].dropna().unique()
 for unit in allunits:
 	unitfile = os.getcwd()+config["excelUnitsOutput"]+unit+".xlsx"
-	df = du.loc[du['Unit Code']==unit]
-	df.to_excel(unitfile)
+	with pd.ExcelWriter(unitfile) as writer:
+		dou = do.loc[(do['Code']==unit)]
+		dou.to_excel(writer, sheet_name='Unit Outcomes (Caidi)')
+		duu = du.loc[(du['Unit Code']==unit)]
+		duu.to_excel(writer, sheet_name='Accreditation Outcomes')
+		dmu = dm.loc[(dm['Unit Code']==unit)]
+		dmu.to_excel(writer, sheet_name='Unit to Program Outcomes Map')
+'''
 
-# 2. generate per-course mapping of unit outcomes to program outcomes
+# 3. generate per-course mapping of unit outcomes to program outcomes
+## TODO these won't be submitted for ACS since not requested, but when time format the final versions similar to Engineering
+'''
 for course in kb.courseSet:
-	cf = os.getcwd()+config["excelProgramsOutput"]+course+"-Unit-Program-OutcomesMap.xlsx"
+	cf = os.getcwd()+config["excelProgramMappingsOutput"]+course+"-Unit-Program-OutcomesMap.xlsx"
 	om = kb.acsDict["OutMap"][course]
 	with pd.ExcelWriter(cf,engine='openpyxl') as writer: 
 		om.to_excel(writer) 
-
+'''
 		
 		
