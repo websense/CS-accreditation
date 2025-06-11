@@ -16,8 +16,9 @@ export PYTHONPATH="${PYTHONPATH}:$PROJECT_DIR:$KNOWLEDGEBASE_DIR"
 rm -f $HTML_OUTPUT/*
 
 
-# Copy main html files from input directory to the html output directory
+# Copy main html files from input directory to the html output directory (except the ProgramTemplate not needed)
 cp $HTML_INPUTS/* $HTML_OUTPUT
+rm -f $HTML_OUTPUT/Program-Template.html
 
 # Generate html tables outputs from the knowledgebase and insert them into program templates
 python3 $HTML_DIR/htmlGenerator.py

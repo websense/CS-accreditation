@@ -25,11 +25,19 @@ except json.JSONDecodeError:
 htmlprogtemplatefile = os.getcwd()+config["htmlProgramTemplate"]
 htmloutputs = os.getcwd()+config["htmlOutput"]
 
+## TODO fix \n\n to <br> or <p> in Description texts (eg degree titles) 
 
 def makeAstring(course):
 	ta = kb.acsDict["A"][course]
-	mytable = ta.to_html(index=False, render_links=True, classes = "w3-table-all")
-	return mytable
+	tab = ta.to_html(index=False, render_links=True, classes = "w3-table-all")
+	justify = kb.acsDict["J"][course] 
+	justify = justify.loc[justify['Criteria']=='Justification of Program Design', ('Paragraph', 'Description Text')].sort_values(by='Paragraph')	
+	outputtext = tab + "\n<h5>Justification of Program</h5>\n" 
+	for ind in justify.index: #every row
+		pi = justify['Description Text'][ind]
+		outputtext = outputtext + "<p>" + pi + "</p>"
+	return  outputtext
+
 
 ## TODO get url links with skill code name
 ## TODO add professional role as table caption or title
@@ -37,19 +45,29 @@ def makeAstring(course):
 def makeBstring(course):
 	mytable = "<h4> Professional Role: " + kb.acsDict["B"][course]['Role']  + "</h4>\n\n"
 	tb = kb.acsDict["B"][course]["Units"].copy()
-	tb = tb.loc[:,('SFIA Skill Code', 'SFIA level','Unit Code','Unit Name','SFIA-9 URL')]
+	tb = tb.loc[:,('SFIA Skill Code', 'SFIA level','Unit Code','Unit Name','Justification','SFIA-9 URL')]
 	mytable = mytable + tb.to_html(index=False, render_links=True, classes = "w3-table-all")
 	mytable = mytable.replace(".0","") #TODO fix problem with int as floats in dataframe
+	
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion B Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = " "
+	else:
+		footnotetext = "<p>" + footnote.loc[ : , 'Description Text'].values[0] + "</p>"	
+	mytable = mytable + footnotetext 
+	
 	return mytable
 	
 
-## TODO 
+## TODO for Criterion C
 ## smaller / vertical headings? and smaller text? and coloured cols
 ## ACS col groups<th>Mandatory Units</th><th colspan="5">Professional</th> <th colspan="8">Core</th><th></th>
 ## colours https://www.w3schools.com/colors/colors_names.asp
 ##https://www.w3schools.com/html/html_table_colgroup.asp#legalcss - but not working
 #	colgroups =   '<colgroup> <col span="1"> <col span="5" style="background-color: pink"> </colgroup> \n'  #PeachPuff
 #	body = body.replace('<thead>\n', colgroups + '<thead>\n' )
+## TODO for Criterion C justifications - include CBoK category column as well as the Outcome, and order by that
 
 def makeCstring(course):
 	tc = kb.acsDict["C"][course]["Map Table"]
@@ -59,13 +77,28 @@ def makeCstring(course):
 	body = body.replace(".0","") #TODO fix problem with int as floats in dataframe
 	groupsrow = '<th>Mandatory Units</th><th colspan="5" class="w3-center">Professional</th> <th colspan="8" class="w3-center">Core</th><th></th>\n'
 	body = body.replace('</thead>', groupsrow + '</thead>')
-	mytable = head + body + tail
+	
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion C Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = " "
+	else:
+		footnotetext = "<p>" + footnote.loc[ : , 'Description Text'].values[0] + "</p>"	
+	mytable = head + body + footnotetext + tail
 	return mytable
 
 
 def makeDstring(course):
 	td = kb.acsDict["D"][course]
 	mytable = td.to_html(index=False, render_links=True, classes = "w3-table-all")
+	# include footnote if there is one
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion D Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = " "
+	else:
+		footnotetext = "<p>" + footnote.loc[ : , 'Description Text'].values[0] + "</p>"	
+	mytable = mytable + footnotetext
 	return mytable
 
 
@@ -78,6 +111,7 @@ def makeFstring(course):
 	tf = kb.acsDict["F"][course]["Practice"] #text
 	return "<p>"+tf+"</p>"
 	
+#Map unit outcomes to course outcomes
 def makeOutMapstring(course):
 	tt = kb.acsDict["OutMap"][course]
 	head = '<div class="w3-responsive">\n\n' #scroll bar
@@ -87,6 +121,7 @@ def makeOutMapstring(course):
 	return mytable
 	
 	
+#criterion C justification mapping
 def makeAppendixstring(course):
 	head = '<div class="w3-responsive">\n\n' #scroll bar
 	tail = '\n\n</div>'
@@ -109,7 +144,7 @@ for course in kb.courseSet:
 	fout = open(outfile, "w") 
 	# Populate course html template
 	ta = kb.acsDict["A"][course]
-	coursename=ta.loc[ta['Program Details']=='Award Title on Transcript', 'Description or URL'].values[0]
+	coursename=ta.loc[ta['Program Details']=='Program Title', 'Description or URL'].values[0]
 	ftext = ftext.replace("THISPROG",coursename) 
 	ftext = ftext.replace("criterionA-Table-HERE",  makeAstring(course)  )
 	ftext = ftext.replace("criterionB-Table-HERE",  makeBstring(course)  )
@@ -117,8 +152,8 @@ for course in kb.courseSet:
 	ftext = ftext.replace("criterionD-Table-HERE",  makeDstring(course)  )
 	ftext = ftext.replace("criterionE-Table-HERE",  makeEstring(course)  )
 	ftext = ftext.replace("criterionF-Table-HERE",  makeFstring(course)  )
-	ftext = ftext.replace("appendix-Table-HERE",  makeAppendixstring(course)  )
-	ftext = ftext.replace("OutMap-Table-HERE",  makeOutMapstring(course) )
+	ftext = ftext.replace("criterionC-Justifications-Table-HERE",  makeAppendixstring(course)  )
+	# ftext = ftext.replace("OutMap-Table-HERE",  makeOutMapstring(course) ) # NOT published for now (not in ACS criteria)
 	# Write to a new  html file for the program
 	fout.write(ftext)
 	fout.close()
