@@ -38,4 +38,4 @@ jobs:
     - name: Call a Bash Script
       run:  | 
         bash ${GITHUB_WORKSPACE}/DirectoryNames.sh
-        bash ${GITHUB_WORKSPACE}/HTMLGenerator/generateHTML.sh
+        bash ${GITHUB_WORKSPACE}/MakeAccreditationOutputs.sh
