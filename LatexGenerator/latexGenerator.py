@@ -31,12 +31,22 @@ staffcvs = kb.acsDict['StaffCVs']
 stafftable = staffcvs[staffcvs.columns[:-1]].copy()
 #create names with hyperlink to research repository URL
 stafftable['Name'] = "\\href{" + staffcvs['Research repository URL']  + "}{"+ staffcvs['Name']  +  " }"
-
 outfile = latexoutputs+"StaffCVs.tex"
 fout = open(outfile, "w") 
 fout.write(stafftable.to_latex(index=False, column_format="p{3.4cm} p{.5cm} p{.5cm}  p{.5cm} p{.5cm} p{6.35cm}"+"\n\n").replace("00000","") )
 fout.close()
 	
+	
+# generate IAP table for part 1
+IAPlist = kb.acsDict['IAPlist']
+IAPtable = IAPlist.loc[:, ('Name','Company')]
+#create names with hyperlink to linkedin URL
+IAPtable['Name'] = "\\href{" + IAPlist['LinkedIn']  + "}{"+ IAPlist['Name']  +  " }"
+outfile = latexoutputs+"IAPtable.tex"
+fout = open(outfile, "w") 
+fout.write(IAPtable.to_latex(index=False, column_format="p{4.5cm} p{9cm} "+"\n\n") )
+fout.close()
+
 	
 # generate per-program latex templates of outcomes (but eventually link to caidi outcomes map not this)
 for course in kb.courseSet:
@@ -59,7 +69,7 @@ for course in kb.courseSet:
 
 ## given a latex table string, generate string with stripped header and footer and output just the row data with row seps
 def to_latex_table_rowsonly(mytablestr):
-	#delete start up to and including \midrule\n
+	#delete table header ie start up to and including \midrule\n
 	noheader = mytablestr.partition('\\midrule\n')[2]
 	rowsonly = noheader.replace('bottomrule','hline')
 	rowsonly = rowsonly.replace("\\\\\n","\\\\ \\hline\n") #need row lines for readability
@@ -75,21 +85,44 @@ for course in kb.courseSet:
 	fname = latexoutputs + "criterionA-"+course+".tex"
 	fA = open(fname, "w") 
 	ta = kb.acsDict["A"][course].copy()
-	# insert hyperlinks
-	for row in ['Handbook']:   #no longer 'Study Plan' - link broken
-		u1 = ta.loc[ta['Program Details']==row, 'Description or URL'].values[0] #get string
-		u11 = "\\href{"+u1+"}{"+row+" Details}"
-		ta.replace(u1, u11, inplace=True)
-	mytable = ta.to_latex(index=False)
-	fA.write( mytable )
+	
+	# insert hyperlinks for handbook
+	u1 = ta.loc[ta['Program Details']=='Program Handbook', 'Description or URL'].values[0] #get string
+	u11 = "\\href{"+u1+"}{Program Specification, Units, and Study Plans}"
+	ta.replace(u1, u11, inplace=True)
+	
+	# insert hyperlinks for web page
+	u1 = ta.loc[ta['Program Details']=='Program Web Page', 'Description or URL'].values[0] #get string
+	u11 = "\\href{"+u1+"}{Program Web Page}"
+	ta.replace(u1, u11, inplace=True)
+	
+	# insert hyperlinks for LMS
+	u1 = ta.loc[ta['Program Details']=='LMS Unit Materials', 'Description or URL'].values[0] #get string
+	u11 = "\\href{"+u1+"}{UWA Learning Management System}"
+	ta.replace(u1, u11, inplace=True)
+	
+	# insert hyperlinks for HTML version of tables
+	u1 = ta.loc[ta['Program Details']=='Web version of ACS Tables', 'Description or URL'].values[0] #get string
+	u11 = "\\href{"+u1+"}{Web version of Accreditation Tables and Mapping Justifications}"
+	ta.replace(u1, u11, inplace=True)
+	
+	## Remove header row - it is not clear
+	atab = ta.to_latex(index=False, header=False,  column_format="P{4.5cm} P{9cm}"+"\n") #wrap long degree names 
+	atab = atab.replace("\\\\\n","\\\\ \\midrule\n") #need row lines for readability
+	fA.write(atab) 
 	fA.close()
 	
 # write program justification text to Justification-THISPROG.tex
 for course in kb.courseSet:
 	fname = latexoutputs + "Justification-"+course+".tex"
 	fA = open(fname, "w") 
-	ta = kb.acsDict["J"][course].values[0] #get string
-	fA.write( ta )
+	ta = kb.acsDict["J"][course]
+	ta = ta.loc[ta['Criteria']=='Justification of Program Design', ('Paragraph', 'Description Text')].sort_values(by='Paragraph')	
+	outputtext = "\n\n"
+	for ind in ta.index: #every row
+		pi = ta['Description Text'][ind]
+		outputtext = outputtext + pi + "\n\n \\bigskip \n\n"
+	fA.write( outputtext )
 	fA.close()
 
 
@@ -97,7 +130,7 @@ for course in kb.courseSet:
 for course in kb.courseSet:
 	fname = latexoutputs + "criterionB-"+course+".tex"
 	fB = open(fname, "w") 
-	fB.write("\\paragraph{Professional Role:}"+kb.acsDict["B"][course]['Role']+"\n\n")
+	fB.write("\\subsubsection*{Professional Role: "+kb.acsDict["B"][course]['Role']+"} \n\n")
 	tb = kb.acsDict["B"][course]["Units"].copy()
 	for ind in tb.index: #every row
 		c1 = tb['SFIA Skill Code'][ind]
@@ -106,7 +139,15 @@ for course in kb.courseSet:
 		tb.loc[ind, 'SFIA Skill Code']  = c11  #update table sfia code with href version
 	mytable = tb.loc[:,('SFIA Skill Code', 'SFIA level','Unit Code','Unit Name')]
 	#don't know why ints were interpreted as floats
-	fB.write(mytable.to_latex(index=False, column_format="c c l l "+"\n\n").replace(".000000","") )
+	fB.write(mytable.to_latex(index=False, column_format="c c l l "+"\n\n", float_format="%.0f"))  #.replace(".000000","") )
+	#add a footnote if there is one
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion B Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = "\n\n"
+	else:
+		footnotetext = "\n\n" + footnote.loc[ : , 'Description Text'].values[0] + "\n\n"	
+	fB.write(footnotetext)
 	fB.close()
 
 
@@ -116,7 +157,17 @@ for course in kb.courseSet:
 	fC = open(fname, "w") 
 	mytable1 = kb.acsDict["C"][course]["Map Table"]
 	#remove header and footer info: just the rows
-	fC.write( to_latex_table_rowsonly(mytable1.to_latex()) )
+	tabbody = to_latex_table_rowsonly(mytable1.to_latex())
+	fC.write(tabbody)
+	fC.write('\n\n\end{center}\n\n')
+	#add a footnote if there is one
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion C Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = "\n\n"
+	else:
+		footnotetext = "\n\n" + footnote.loc[ : , 'Description Text'].values[0] + "\n\n"	
+	fC.write(footnotetext)
 	fC.close()
 
 
@@ -126,10 +177,19 @@ for course in kb.courseSet:
 	fD = open(fname, "w") 
 	td = kb.acsDict["D"][course]
 	fD.write("\\begin{small} \n\n")
-	dtab = td.to_latex(index=False, column_format="P{1.4cm} P{2cm} P{2cm} P{7cm}"+"\n\n")
-	dtab = dtab.replace("\\\\\n","\\\\ \\hline\n") #need row lines for readability
+	dtab = td.to_latex(index=False, column_format="P{1.4cm} P{2cm} P{2cm} P{7cm}"+"\n\n", longtable=True)
+	dtab = dtab.replace("\\\\\n","\\\\ \\midrule\n") #need row lines for readability
+	#dtab = dtab.replace("tabular","longtable")
 	fD.write(dtab)
 	fD.write("\\end{small} \n\n")
+	#add a footnote if there is one	
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion D Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = " "
+	else:
+		footnotetext = "\n\n" + footnote.loc[ : , 'Description Text'].values[0] + "\n \\bigskip \n\n"	
+	fD.write(footnotetext)
 	fD.close()
 
 # tables for criterion E
@@ -138,7 +198,9 @@ for course in kb.courseSet:
 	fE = open(fname, "w") 
 	te = kb.acsDict["E"][course]
 	fE.write("\\begin{small} \n\n")
-	fE.write(te.to_latex(index=False, column_format="P{1.4cm} P{2cm} P{9cm}"+"\n\n"))
+	etab = te.to_latex(index=False, column_format="P{1.4cm} P{2cm} P{9cm}"+"\n\n")
+	etab = etab.replace("\\\\\n","\\\\ \\midrule\n") #need row lines for readability
+	fE.write(etab)
 	fE.write("\\end{small} \n\n")
 	fE.close()
 
@@ -153,7 +215,8 @@ for course in kb.courseSet:
 	fF.close()
 
 
-
+## NOT NEEDED  IN LATEX use the html versions tables
+'''
 # appendix: criterionC justifications
 fname = latexoutputs + "appendix-criterionCjustification.tex"
 fC = open(fname, "w") 
@@ -167,6 +230,7 @@ fC.write(longtab.replace("tabular","longtable"))
 #fC.write("\\end{scriptsize}\n\\end{landscape}\n") #tried landscape but still not readable
 fC.write("\\end{scriptsize}\n")
 fC.close()
+'''
 
 
 ## NOT NEEDED use the caidi mapping tables
