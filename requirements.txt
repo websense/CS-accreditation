@@ -6,6 +6,7 @@ cleo==2.1.0
 colorama==0.4.6
 crashtest==0.4.1
 distlib==0.3.8
+docx==0.2.4
 dulwich==0.21.7
 et-xmlfile==1.1.0
 fastjsonschema==2.20.0
