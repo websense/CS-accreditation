@@ -3,8 +3,10 @@
 
 name: Python Accreditation Generator Application
 
-on:
-  pull_request:
+on: 
+  workflow_dispatch:  #manual trigger
+#on:
+#  pull_request:
     types: [review_requested]
     branches: [ "main" ]
 
