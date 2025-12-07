@@ -91,6 +91,7 @@ def makeCstring(course):
 def makeDstring(course):
 	td = kb.acsDict["D"][course]
 	mytable = td.to_html(index=False, render_links=True, classes = "w3-table-all")
+	mytable =mytable.replace("\\n","<br>")  #replace \n in text with html break
 	# include footnote if there is one
 	footnote = kb.acsDict["J"][course]
 	footnote = footnote.loc[footnote['Criteria']=='Criterion D Footnote', ] 
@@ -105,6 +106,14 @@ def makeDstring(course):
 def makeEstring(course):
 	te = kb.acsDict["E"][course]
 	mytable = te.to_html(index=False, render_links=True, classes = "w3-table-all")
+	
+	footnote = kb.acsDict["J"][course]
+	footnote = footnote.loc[footnote['Criteria']=='Criterion E Footnote', ] 
+	if ( footnote.empty ):
+		footnotetext = " "
+	else:
+		footnotetext = "<p>" + footnote.loc[ : , 'Description Text'].values[0] + "</p>"	
+	mytable = mytable + footnotetext 
 	return mytable
 
 def makeFstring(course):
